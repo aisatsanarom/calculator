@@ -35,6 +35,7 @@ public class Main {
       //System.out.println(sum.num2);
         int resultAddition= addition.Calculate();
         System.out.println(resultAddition);
+        //Создаем объект класса для операции вычитания
 
     }
 }
