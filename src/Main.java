@@ -36,6 +36,8 @@ public class Main {
         int resultAddition= addition.Calculate();
         System.out.println(resultAddition);
         //Создаем объект класса для операции вычитания
+        //Создаем объект класса для операции умножения
+        //Создаем объект класса для операции деления
 
     }
 }
