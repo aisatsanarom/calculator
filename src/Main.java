@@ -10,17 +10,17 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
 
-        try {
-            calc(input);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Мало символов");
-        }
 
-        String someInput = calc(input); //в метод Calc подставлям значение ввода
+        String someInput = null;
+        try {
+            someInput = calc(input);  //в метод Calc подставлям значение ввода
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+       someInput = "Ошибка";
+        }
         System.out.println(someInput); // выводим результат из метода Calc
 
     }
-    private static String calc(String input)  throws ArrayIndexOutOfBoundsException{
+    private static String calc(String input) throws IOException, ArrayIndexOutOfBoundsException {
 
         String[] arabic = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         String[] roman = {"null", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
@@ -49,14 +49,10 @@ public class Main {
      //System.out.println(indexA);
     //System.out.println(indexD);
 
-        if ( numbers.length != 3 ) { // если символов больше трех
-            try {
-            throw new IOException();
-        } catch (IOException e) {
-                return "Неверное количество символов";
-            }
-        }
 
+        if ( numbers.length != 3 |a==null ) { // если символов больше трех
+            throw new IOException();
+        }
 
             if (arabicA && arabicD ) {
             return operationMethod(a, b, d); //в метод для римских подставлям разделенный массив
@@ -64,10 +60,8 @@ public class Main {
         }else if (romanA && romanD ) {
             String result = operationMethod(indexA, b, indexD);
             return romanOut [Integer.parseInt(result)];
-        }try {
+        }else  {
             throw new IOException();
-        } catch (IOException r) {
-            return "Неверный тип значений";
     }
     }
 
@@ -99,7 +93,7 @@ return String.valueOf(result);
             int result = Integer.parseInt(valueA) / Integer.parseInt(valueC);
             return String.valueOf(result);
             }else{
-               return ("ошибка");
+               return ("Ошибка");
         }
     }
 }
