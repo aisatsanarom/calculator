@@ -1,4 +1,6 @@
 
+import java.io.IOException;
+import java.lang.ArrayIndexOutOfBoundsException;
 import java.util.Scanner;
 import java.util.Arrays;
 public class Main {
@@ -6,16 +8,29 @@ public class Main {
 
 
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();//Условие, введенное через консоль
+        String input = scanner.nextLine();
+
+        try {
+            calc(input);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Мало символов");
+        }
+
         String someInput = calc(input); //в метод Calc подставлям значение ввода
         System.out.println(someInput); // выводим результат из метода Calc
 
     }
-    private static String calc(String input) {
+    private static String calc(String input)  throws ArrayIndexOutOfBoundsException{
 
         String[] arabic = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         String[] roman = {"null", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
-        String[] romanOut = {"null", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII","XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "X" };
+        String[] romanOut = {"0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
+                "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL",
+                "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L", "LI", "LII", "LIII", "LIV", "LV", "LVI", "LVII", "LVIII", "LIX", "LX",
+                "LXI", "LXII", "LXIII", "LXIV", "LXV", "LXVI", "LXVII", "LXVIII", "LXIX", "LXX",
+                "LXXI", "LXXII", "LXXIII", "LXXIV", "LXXV", "LXXVI", "LXXVII", "LXXVIII", "LXXIX", "LXXX",
+                "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV", "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC",
+                "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII", "XCVIII", "XCIX", "C"};
         String[] numbers = input.split(" "); //Разделение ввода консоли на символы по пробелу в массив
         String a = numbers[0];
         String b = numbers[1];
@@ -29,62 +44,48 @@ public class Main {
         String indexA = aToNumber(a); // Перевод из римских в арабские a (через индекс массива)
         String indexD = aToNumber(d); // Перевод из римских в арабские d (через индекс массива)
 
-     // System.out.println(indexA);
+
+
+     //System.out.println(indexA);
     //System.out.println(indexD);
 
- if (numbers.length > 3) { // Ограничение по длине выражения
-            return ("Ошибка, должно быть три символа");
+        if ( numbers.length != 3 ) { // если символов больше трех
+            try {
+            throw new IOException();
+        } catch (IOException e) {
+                return "Неверное количество символов";
+            }
+        }
 
-        } else if (arabicA && arabicD ) {
+
+            if (arabicA && arabicD ) {
             return operationMethod(a, b, d); //в метод для римских подставлям разделенный массив
 
         }else if (romanA && romanD ) {
             String result = operationMethod(indexA, b, indexD);
             return romanOut [Integer.parseInt(result)];
-        }
-        return ("Ошибка, неподходящие символы");
+        }try {
+            throw new IOException();
+        } catch (IOException r) {
+            return "Неверный тип значений";
     }
+    }
+
+
 
     private static String aToNumber(String a) {
         String result;
-        switch (a) {
-            case "I":
-                result = "1";
-                break;
-            case "II":
-                result = "2";
-                break;
-            case "III":
-                result = "3";
-                break;
-            case "IV":
-                result = "4";
-                break;
-            case "V":
-                result = "5";
-                break;
-            case "VI":
-                result = "6";
-                break;
-            case "VII":
-                result = "7";
-                break;
-            case "VIII":
-                result = "8";
-                break;
-            case "IX":
-                result = "9";
-                break;
-            case "X":
-                result = "10";
-                break;
-            default:
-                result = "-1";
+        String[] roman = {"null", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
+        for (int i = 0; i<roman.length; i++){
+            if(a.equals(roman[i])){
+                result = String.valueOf(i);
+                return result;
+            }
         }
-        return result;
+        return "-1";
     }
 
-    private static String operationMethod (String valueA, String valueB, String valueC) { //Метод для распознавания сложения, вычитания и т.д. из строки условия
+    private static String operationMethod (String valueA, String valueB, String valueC)   { //Метод для распознавания сложения, вычитания и т.д. из строки условия
         if (valueB.contains("+")) {
                int result = Integer.parseInt(valueA) + Integer.parseInt(valueC);
 return String.valueOf(result);
@@ -98,22 +99,7 @@ return String.valueOf(result);
             int result = Integer.parseInt(valueA) / Integer.parseInt(valueC);
             return String.valueOf(result);
             }else{
-               return ("Ошибка");
-            }
+               return ("ошибка");
         }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
